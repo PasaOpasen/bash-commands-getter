@@ -55,7 +55,7 @@ def get_ast_commands(tree: Dict[str, Any]) -> Set[str]:
             if cmd[0].isalpha():
                 suff = [
                     t for s in dct.get('suffix', [])
-                    if (t := s.get('text')).startswith('-') and '=' not in t
+                    if (t := s.get('text')) and t.startswith('-') and '=' not in t
                 ]
                 if suff:
                     cmd = f"{cmd} {' '.join(suff)}"

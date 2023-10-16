@@ -38,6 +38,8 @@ mkdir -p $(dirname $reportfile)
 
 docker cp ${container}:/srv/out.txt $reportfile
 
+sed -i "s@data/@$1/@g" $reportfile
+
 set +a
 echo -e "\nFound commands:\n"
 

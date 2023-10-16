@@ -2,11 +2,11 @@
 
 This repo is purposed to provide a command to list all *shell commands* which are used in provided files. It is my solution for [this question](https://stackoverflow.com/questions/77300162/list-all-commands-using-in-the-bash-script?noredirect=1#comment136282587_77300162).
 
-It uses [bash-parser](https://github.com/vorpaljs/bash-parser) `npm` package to get shell script AST and uses simple Python script for other high-level operations. All this is packed to Docker container and can be user in any UNIX system by attached shell script.
+It uses [bash-parser](https://github.com/vorpaljs/bash-parser) `npm` package to get shell script AST and uses simple Python script for other high-level operations. All this is packed to Docker container and can be used in any UNIX system by attached shell script.
 
 For example, the command (inside this repo)
 
-```sh
+```bash
 bash list-bash-commands.sh data/shell-files data/report.txt
 ```
 

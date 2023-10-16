@@ -38,7 +38,12 @@ mkdir -p $(dirname $reportfile)
 
 docker cp ${container}:/srv/out.txt $reportfile
 
+builtins="$(compgen -b | grep -E '\w' | xargs | tr ' ' '|')"
+
+# rename dirs + remove shell builtins
 sed -i "s@data/@$1/@g" $reportfile
+
+cat $reportfile | grep -v -E "^($builtins)\s" > tmp/tmpfile && mv tmp/tmpfile $reportfile
 
 set +a
 echo -e "\nFound commands:\n"

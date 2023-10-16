@@ -52,13 +52,13 @@ def get_ast_commands(tree: Dict[str, Any]) -> Set[str]:
 
         if dct.get('type') == 'Command' and 'name' in dct:
             cmd: str = dct['name']['text']
-            if cmd[0].isalpha():
+            if re.match(r"^[\w\d_]*$", cmd):
                 suff = [
                     t for s in dct.get('suffix', [])
                     if (t := s.get('text')) and t.startswith('-') and '=' not in t
                 ]
                 if suff:
-                    cmd = f"{cmd} {' '.join(suff)}"
+                    cmd = f"{cmd} {' '.join(sorted(set(suff)))}"
                 res.add(cmd)
 
         for v in dct.values():

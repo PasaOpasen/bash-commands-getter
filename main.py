@@ -55,7 +55,7 @@ def get_ast_commands(tree: Dict[str, Any]) -> Set[str]:
             if cmd[0].isalpha():
                 suff = [
                     t for s in dct.get('suffix', [])
-                    if (t := s.get('text')).startswith('-')
+                    if (t := s.get('text')).startswith('-') and '=' not in t
                 ]
                 if suff:
                     cmd = f"{cmd} {' '.join(suff)}"
@@ -88,6 +88,7 @@ def get_dir_shell_commands(path: Union[str, os.PathLike]) -> Dict[str, List[str]
     CLEAN_BASH_PATH = 'cleaned.sh'
 
     file2commands = {}
+    failed_files = []
 
     for p in Path(path).rglob('*'):
         if p.is_dir():
@@ -105,11 +106,23 @@ def get_dir_shell_commands(path: Union[str, os.PathLike]) -> Dict[str, List[str]
             file2commands[str(p)] = get_ast_commands(read_json(AST_PATH))
         except Exception:
             traceback.print_exc()
+            failed_files.append(str(p))
 
     command2files = defaultdict(list)
     for f, cc in file2commands.items():
         for c in cc:
             command2files[c].append(f)
+
+    print(f"Successfully processed files: {len(file2commands)}")
+    if failed_files:
+        count = len(failed_files)
+        count_len = len(str(count))
+        print(
+            f"Failed files ({count}):\n\t" + '\n\t'.join(
+                f"{str(i).rjust(count_len)}) {f}"
+                for i, f in enumerate(sorted(failed_files), 1)
+            )
+        )
 
     return dict(command2files)
 
@@ -118,11 +131,13 @@ def extract_shell_commands(path: Union[str, os.PathLike], outpath: Union[str, os
 
     dct = get_dir_shell_commands(path)
 
+    cmd_len = max(len(k) for k in dct.keys())
+
     out = Path(outpath)
     out.parent.mkdir(exist_ok=True, parents=True)
     write_text(
         '\n'.join(
-            cmd + '\t--\t' + ';'.join(sorted(files))
+            cmd.ljust(cmd_len) + '\t--\t' + ';'.join(sorted(files))
             for cmd, files in sorted(dct.items())
         ),
         path=out

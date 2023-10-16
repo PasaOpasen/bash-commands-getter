@@ -6,6 +6,7 @@
 #
 
 set -e
+set -x
 
 container=BCG
 
@@ -37,7 +38,8 @@ mkdir -p $(dirname $reportfile)
 
 docker cp ${container}:/srv/out.txt $reportfile
 
-cat $reportfile
+set +a
+echo -e "\nFound commands:\n"
 
-echo -e '\n\n\n---> Success'
+cat $reportfile
 

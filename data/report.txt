@@ -1,0 +1,24 @@
+apt-get -o -d --no-install-recommends -y --reinstall	--	data/build-deps/debian10/download.sh
+apt-get -o -d -y --reinstall                        	--	data/build-deps/debian10/download.sh
+apt-get -o -y --reinstall                           	--	data/build-deps/debian10/build-python.sh
+apt-get -y -f                                       	--	data/build-deps/debian10/install.sh
+auditwheel -w                                       	--	data/repair_wheels.sh
+cd                                                  	--	data/build-deps/centos8s/install.sh;data/build-deps/debian10/build-python.sh;data/build-deps/debian10/install.sh;data/build-deps/redos73/install.sh
+cp -r                                               	--	data/build-deps/debian10/build-python.sh
+curl -O                                             	--	data/build-deps/debian10/build-python.sh
+dnf -y                                              	--	data/build-deps/redos73/install.sh
+dpkg -i                                             	--	data/build-deps/debian10/install.sh
+echo                                                	--	data/repair_wheels.sh
+find -mindept -not -name -delete                    	--	data/build-deps/debian10/download.sh
+ls -lah                                             	--	data/build-deps/centos8s/download.sh;data/build-deps/debian10/download.sh
+make                                                	--	data/build-deps/debian10/build-python.sh
+make -j                                             	--	data/build-deps/debian10/build-python.sh
+mkdir                                               	--	data/build-deps/debian10/build-python.sh
+mkdir -p                                            	--	data/build-deps/centos8s/download.sh;data/build-deps/debian10/build-python.sh;data/build-deps/debian10/download.sh
+python3.8 -V                                        	--	data/build-deps/debian10/build-python.sh
+repair_wheel                                        	--	data/repair_wheels.sh
+set -e -u -x                                        	--	data/repair_wheels.sh
+tar -xf                                             	--	data/build-deps/debian10/build-python.sh
+true                                                	--	data/repair_wheels.sh
+yum -y                                              	--	data/build-deps/centos8s/install.sh
+yumdownloader --downloadonly --resolve              	--	data/build-deps/centos8s/download.sh

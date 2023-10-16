@@ -1,0 +1,285 @@
+{
+    "type": "Script",
+    "commands": [
+        {
+            "type": "If",
+            "clause": {
+                "type": "CompoundList",
+                "commands": [
+                    {
+                        "type": "Command",
+                        "name": {
+                            "text": "[",
+                            "type": "Word"
+                        },
+                        "suffix": [
+                            {
+                                "text": "!",
+                                "type": "Word"
+                            },
+                            {
+                                "text": "-f",
+                                "type": "Word"
+                            },
+                            {
+                                "text": "dreamocr/tmp/params.md",
+                                "type": "Word"
+                            },
+                            {
+                                "text": "]",
+                                "type": "Word"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "then": {
+                "type": "CompoundList",
+                "commands": [
+                    {
+                        "type": "If",
+                        "clause": {
+                            "type": "CompoundList",
+                            "commands": [
+                                {
+                                    "type": "Command",
+                                    "name": {
+                                        "text": "[",
+                                        "type": "Word"
+                                    },
+                                    "suffix": [
+                                        {
+                                            "text": "!",
+                                            "type": "Word"
+                                        },
+                                        {
+                                            "text": "-e",
+                                            "type": "Word"
+                                        },
+                                        {
+                                            "text": "/dreamocr/.venv",
+                                            "type": "Word"
+                                        },
+                                        {
+                                            "text": "]",
+                                            "type": "Word"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "then": {
+                            "type": "CompoundList",
+                            "commands": [
+                                {
+                                    "type": "Command",
+                                    "name": {
+                                        "text": "ln",
+                                        "type": "Word"
+                                    },
+                                    "suffix": [
+                                        {
+                                            "text": "-s",
+                                            "type": "Word"
+                                        },
+                                        {
+                                            "text": "/srv/aprbot/dreamocr/.venv",
+                                            "type": "Word"
+                                        },
+                                        {
+                                            "text": "/srv/docutable/dreamocr/.venv",
+                                            "type": "Word"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "Subshell",
+                        "list": {
+                            "type": "CompoundList",
+                            "commands": [
+                                {
+                                    "type": "LogicalExpression",
+                                    "op": "and",
+                                    "left": {
+                                        "type": "Command",
+                                        "name": {
+                                            "text": "cd",
+                                            "type": "Word"
+                                        },
+                                        "suffix": [
+                                            {
+                                                "text": "dreamocr",
+                                                "type": "Word"
+                                            }
+                                        ]
+                                    },
+                                    "right": {
+                                        "type": "Command",
+                                        "name": {
+                                            "text": "make",
+                                            "type": "Word"
+                                        },
+                                        "suffix": [
+                                            {
+                                                "text": "save_params",
+                                                "type": "Word"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Command",
+            "prefix": [
+                {
+                    "text": "comb=markdown-combiner",
+                    "type": "AssignmentWord"
+                }
+            ]
+        },
+        {
+            "type": "Command",
+            "name": {
+                "text": "bash",
+                "type": "Word"
+            },
+            "suffix": [
+                {
+                    "text": "meta/lib/clone-repo-or-pull.sh",
+                    "type": "Word"
+                },
+                {
+                    "text": "$comb",
+                    "expansion": [
+                        {
+                            "loc": {
+                                "start": 0,
+                                "end": 4
+                            },
+                            "parameter": "comb",
+                            "type": "ParameterExpansion"
+                        }
+                    ],
+                    "type": "Word"
+                }
+            ]
+        },
+        {
+            "type": "Command",
+            "prefix": [
+                {
+                    "text": "repo=tmp/$comb",
+                    "expansion": [
+                        {
+                            "loc": {
+                                "start": -7,
+                                "end": -3
+                            },
+                            "parameter": "comb",
+                            "type": "ParameterExpansion"
+                        },
+                        {
+                            "loc": {
+                                "start": 9,
+                                "end": 13
+                            },
+                            "parameter": "comb",
+                            "type": "ParameterExpansion"
+                        }
+                    ],
+                    "type": "AssignmentWord"
+                }
+            ]
+        },
+        {
+            "type": "Command",
+            "name": {
+                "text": "cd",
+                "expansion": [
+                    {
+                        "loc": {
+                            "start": -22,
+                            "end": -18
+                        },
+                        "parameter": "comb",
+                        "type": "ParameterExpansion"
+                    },
+                    {
+                        "loc": {
+                            "start": -6,
+                            "end": -2
+                        },
+                        "parameter": "comb",
+                        "type": "ParameterExpansion"
+                    }
+                ],
+                "type": "Word"
+            },
+            "suffix": [
+                {
+                    "text": "$repo",
+                    "expansion": [
+                        {
+                            "loc": {
+                                "start": 0,
+                                "end": 4
+                            },
+                            "parameter": "repo",
+                            "type": "ParameterExpansion"
+                        }
+                    ],
+                    "type": "Word"
+                }
+            ]
+        },
+        {
+            "type": "Command",
+            "name": {
+                "text": "python",
+                "expansion": [
+                    {
+                        "loc": {
+                            "start": -6,
+                            "end": -2
+                        },
+                        "parameter": "repo",
+                        "type": "ParameterExpansion"
+                    }
+                ],
+                "type": "Word"
+            },
+            "suffix": [
+                {
+                    "text": "${comb}.py",
+                    "expansion": [
+                        {
+                            "loc": {
+                                "start": 0,
+                                "end": 6
+                            },
+                            "parameter": "comb",
+                            "type": "ParameterExpansion"
+                        }
+                    ],
+                    "type": "Word"
+                },
+                {
+                    "text": "../../README.md",
+                    "type": "Word"
+                },
+                {
+                    "text": "../Documentation.md",
+                    "type": "Word"
+                }
+            ]
+        }
+    ]
+}

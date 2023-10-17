@@ -161,7 +161,7 @@ def extract_shell_commands(path: Union[str, os.PathLike], outpath: Union[str, os
     out.parent.mkdir(exist_ok=True, parents=True)
     write_text(
         '\n'.join(
-            cmd.ljust(cmd_len) + '\t==\t' + ';'.join(sorted(files))
+            cmd.ljust(cmd_len) + '\t==\t' + ';'.join(sorted(set(files)))
             for cmd, files in sorted(dct.items())
         ),
         path=out

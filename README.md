@@ -12,18 +12,18 @@ bash list-bash-commands.sh data/shell-files data/report.txt
 
 will list almost all using shell commands for shell files in the `data/shell-files` directory. The result is 
 ```sh
-auditwheel -w                         	==	data/shell-files/repair_wheels.sh
-cp -r                                 	==	data/shell-files/build-deps/debian10/build-python.sh
-curl -O                               	==	data/shell-files/build-deps/debian10/build-python.sh
-dnf -y                                	==	data/shell-files/build-deps/redos73/install.sh
-dpkg -i                               	==	data/shell-files/build-deps/debian10/install.sh
-find -delete -mindept -name -not      	==	data/shell-files/build-deps/debian10/download.sh
-ls -lah                               	==	data/shell-files/build-deps/centos8s/download.sh;data/shell-files/build-deps/debian10/download.sh
-make                                  	==	data/shell-files/build-deps/debian10/build-python.sh;data/shell-files/build-deps/debian10/build-python.sh
-mkdir                                 	==	data/shell-files/build-deps/centos8s/download.sh;data/shell-files/build-deps/debian10/build-python.sh;data/shell-files/build-deps/debian10/build-python.sh;data/shell-files/build-deps/debian10/download.sh
-tar -xf                               	==	data/shell-files/build-deps/debian10/build-python.sh
-yum -y                                	==	data/shell-files/build-deps/centos8s/install.sh
-yumdownloader --downloadonly --resolve	==	data/shell-files/build-deps/centos8s/download.sh
+auditwheel -w                           ==      data/shell-files/repair_wheels.sh
+cp -r                                   ==      data/shell-files/build-deps/debian10/build-python.sh
+curl -O                                 ==      data/shell-files/build-deps/debian10/build-python.sh
+dnf -y                                  ==      data/shell-files/build-deps/redos73/install.sh
+dpkg -i                                 ==      data/shell-files/build-deps/debian10/install.sh
+find -delete -mindept -name -not        ==      data/shell-files/build-deps/debian10/download.sh
+ls -lah                                 ==      data/shell-files/build-deps/centos8s/download.sh;data/shell-files/build-deps/debian10/download.sh
+make                                    ==      data/shell-files/build-deps/debian10/build-python.sh
+mkdir                                   ==      data/shell-files/build-deps/centos8s/download.sh;data/shell-files/build-deps/debian10/build-python.sh;data/shell-files/build-deps/debian10/download.sh
+tar -xf                                 ==      data/shell-files/build-deps/debian10/build-python.sh
+yum -y                                  ==      data/shell-files/build-deps/centos8s/install.sh
+yumdownloader --downloadonly --resolve  ==      data/shell-files/build-deps/centos8s/download.sh
 ```
 
 Note that:

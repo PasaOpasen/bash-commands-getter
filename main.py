@@ -46,11 +46,15 @@ def get_ast_commands(tree: Dict[str, Any]) -> Set[str]:
     ['bash', 'cd', 'ln -s', 'make', 'python']
     """
 
-    res = set()
+    commands = set()
+    functions = set()
 
     def step(dct: Dict[str, Any]):
 
-        if dct.get('type') == 'Command' and 'name' in dct:
+        if dct.get('type') == 'Function' and 'name' in dct:
+            functions.add(dct['name']['text'])
+
+        elif dct.get('type') == 'Command' and 'name' in dct:
             cmd: str = dct['name']['text']
             if re.match(r"^[\w\d_]*$", cmd):
                 suff = [
@@ -59,7 +63,7 @@ def get_ast_commands(tree: Dict[str, Any]) -> Set[str]:
                 ]
                 if suff:
                     cmd = f"{cmd} {' '.join(sorted(set(suff)))}"
-                res.add(cmd)
+                commands.add(cmd)
 
         for v in dct.values():
             if isinstance(v, dict):
@@ -70,7 +74,10 @@ def get_ast_commands(tree: Dict[str, Any]) -> Set[str]:
 
     step(tree)
 
-    return res
+    return {
+        c for c in commands
+        if not any(c == f or c.startswith(f + ' ') for f in functions)  # filter functions
+    }
 
 
 def clean_bash_text(inpath: Union[str, os.PathLike], outpath: Union[str, os.PathLike]):
@@ -127,9 +134,26 @@ def get_dir_shell_commands(path: Union[str, os.PathLike]) -> Dict[str, List[str]
     return dict(command2files)
 
 
+def filter_shell_commands(dct: Dict[str, List[str]]) -> Dict[str, List[str]]:
+    """postprocesses shell commands dict"""
+    res: Dict[str, List[str]] = {}
+
+    for cmd, files in sorted(dct.items()):
+        for k in list(res.keys()):
+            if cmd.startswith(k + ' '):  # it is same command
+                res[k].extend(files)  # add its files to base command
+                break
+        else:
+            res[cmd] = files  # add command to dict
+
+    return res
+
+
 def extract_shell_commands(path: Union[str, os.PathLike], outpath: Union[str, os.PathLike]):
 
     dct = get_dir_shell_commands(path)
+
+    dct = filter_shell_commands(dct)
 
     cmd_len = max(len(k) for k in dct.keys())
 
